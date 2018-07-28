@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 var db = require('./db');
 var path = require('path');
 
+var UsersRouter = require('./resources/Users/UsersRouter');
+
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
 var app = express();
@@ -15,6 +17,8 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(__dirname + '/../react-client/dist'));
+
+app.use('/api/user',UsersRouter);
 
 app.get('*', function (req, res){
     res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));
