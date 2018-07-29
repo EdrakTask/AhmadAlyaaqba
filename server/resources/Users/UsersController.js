@@ -21,8 +21,9 @@ exports.login = function(req,res){
             if (err) {
               return console.error(err);
             }
-            req.session.username = user.username; // save user name yo be used when needed in frontend
+            req.session.username = user.userName; // save user name yo be used when needed in frontend
             req.session.role = user.Role; // user role to check if user or admin
+            req.session._id = user._id;
             res.send({success: true, user: user})
           });
         }

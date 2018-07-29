@@ -5,6 +5,7 @@ var path = require('path');
 
 var UsersRouter = require('./resources/Users/UsersRouter');
 var CategorysRouter = require('./resources/Categorys/CategorysRouter');
+var CoursesRouter = require('./resources/Courses/CoursesRouter');
 
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
@@ -21,6 +22,7 @@ app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.use('/api/user', UsersRouter);
 app.use('/api/category', CategorysRouter);
+app.use('/api/course', CoursesRouter);
 
 app.get('*', function (req, res){
     res.sendFile(path.resolve(__dirname, '../react-client/dist', 'index.html'));

@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 
 var UsersSchema = mongoose.Schema({
   userName: { type:String, required:true, unique:true },
+  fullName: { type:String, required:true },
   password: { type:String, required:true },
   Role: { type: String, trim: true, required: true, enum: ['User', 'Admin'], default: 'User' },
   personalImgUrl : {type: String },
