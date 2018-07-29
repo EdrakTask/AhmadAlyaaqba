@@ -25,5 +25,10 @@ UsersRouter.route('/isAdmin')
 	.get(function(req, res) {
 		UsersController.isAdmin(req,res)
 	})
-	
+
+UsersRouter.route('/isLogin')
+	.get(function(req, res) {
+		UsersController.isLogin(req,res)
+	})
+
 module.exports=UsersRouter;
