@@ -12,7 +12,7 @@ UsersRouter.route('/create')
 	})
 
 UsersRouter.route('/logout')
-	.delete(function(req, res) {
+	.get(function(req, res) {
 	  UsersController.logout(req,res) 
 	})
 

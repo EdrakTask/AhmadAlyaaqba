@@ -55,7 +55,6 @@ class Navbar extends React.Component {
   render() {
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    console.log(auth)
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light" style={{"backgroundColor": "#7193b8"}}>
@@ -81,22 +80,15 @@ class Navbar extends React.Component {
                       Menu
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <Link className="dropdown-item" to = {`/user/login`} >
+                      <Link className="dropdown-item" to = {`/user/profile`} >
                         Profile
                       </Link>
                       <Link className="dropdown-item" to = {`/user/login`} >
                         Add course
                       </Link>
                       <div className="dropdown-divider"></div>
-                      <Link className="dropdown-item" to = {`/user/login`} >
-                      Logout
-                      </Link>
+                      <a className="dropdown-item" href="/api/user/logout">Logout</a>
                     </div>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to = {`/user/login`} >
-                      Logout
-                    </Link>
                   </li>
                 </ul>
               )}

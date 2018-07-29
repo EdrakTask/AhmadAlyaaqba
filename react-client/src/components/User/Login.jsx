@@ -9,8 +9,7 @@ class Login extends React.Component {
       userName: '',
       password: '',
       message: '',
-      error: false,
-      success: false
+      error: false
     }
     this.onChange = this.onChange.bind(this);
     this.login = this.login.bind(this);
@@ -20,7 +19,6 @@ class Login extends React.Component {
     this.setState({
       [e.target.name]:e.target.value
     });
-    console.log(this.state)
   }
 
   login(){
@@ -31,14 +29,13 @@ class Login extends React.Component {
       data:this.state
     })
     .done (function (data) {
-      console.log(data)
       if (data.success === false) {
         that.setState({
           error: true,
           message: data.message
         })
       } else {
-        <Redirect to="/"/>
+        window.location.href = "/";
       }
     })
     .fail(function( jqXHR, textStatus ) {
@@ -56,11 +53,6 @@ class Login extends React.Component {
               {this.state.message}
             </div>
           )}
-          {this.state.success && (
-            <div className="alert alert-success" role="alert">
-              Welcome Back,{this.state.message}!! you can use website now
-            </div>
-          )}
           <div className="form-group">
             <label htmlFor="userName">Username</label>
             <input type="text" className="form-control" id="userName" placeholder="Enter Username" name="userName" value={this.userName} onChange={this.onChange}/>
@@ -70,7 +62,7 @@ class Login extends React.Component {
             <input type="password" className="form-control" id="password" placeholder="Enter Password" name="password" value={this.password} onChange={this.onChange}/>
           </div>
           <button className="btn btn-primary" onClick={this.login}>Submit</button>
-          <p>Dont have Account ?<Link to = {`/user/create`}> Create new account </Link></p>
+          <p>Dont have Account ?<Link to = {`/user/signup`}> Create new account </Link></p>
         </div> 
       </div>
     )

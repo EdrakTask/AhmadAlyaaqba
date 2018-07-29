@@ -57,7 +57,7 @@ exports.logout = function (req, res) {
     if (err) {
       return console.log(err);
     }
-    res.send({success:true});
+    res.redirect('/');
   })
 }
 
@@ -72,7 +72,7 @@ exports.isAdmin = function(req, res) {
 }
 
 exports.isLogin = function(req, res) {
-  if (req.session.userName !== undefined) {
+  if (req.session.username !== undefined) {
     res.json(true);
   } else {
     res.json(false);
@@ -80,7 +80,7 @@ exports.isLogin = function(req, res) {
 }
 //to take the user information once logeddin 
 exports.getLoginData = function(req, res) {
-  Users.findOne({username: req.session.username}).exec(function(err, user) {
+  Users.findOne({userName: req.session.username}).exec(function(err, user) {
     if (err) {
       console.error(err);
     }
