@@ -1,18 +1,31 @@
 var db = require('../../db');
 var Courses = require('./Courses');
+var Users = require('../Users/Users');
 
 exports.add = function(req,res){
-  var newCourse = {
-    courseName: req.body.courseName,
-    dateOfStart: req.body.dateOfStart,
-    description: req.body.description,
-    category: req.body.category,
-    userId: req.session._id
-  }
-  var course = new Courses(newCourse);
-  course.save(function(err){
-    if(err) res.send({sucess:false, message:err});
-    res.send({sucess:true, message:'Course added successfully'});
+  Users.findOne({_id: req.session._id})
+  .exec(function(err,user){
+    if (err) return res.send(err);
+    if (!user) { // Handle wrong user name
+      res.send({success: false, message: 'User Not found'})
+    } else {
+      var newCourse = {
+        courseName: req.body.courseName,
+        dateOfStart: req.body.dateOfStart,
+        description: req.body.description,
+        category: req.body.category,
+        userId: req.session._id
+      }
+      var course = new Courses(newCourse);
+      course.save(function(err){
+        if(err) res.send({sucess:false, message:err});
+      })
+      user.Courses.push(course._id);
+      user.save(function(err,data){
+        if (err) return res.send(err);
+        res.send({sucess:true, message:'Course added successfully'});
+      })
+    }
   })
 }
 

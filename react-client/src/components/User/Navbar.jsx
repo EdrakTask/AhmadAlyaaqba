@@ -57,42 +57,47 @@ class Navbar extends React.Component {
     const open = Boolean(anchorEl);
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light" style={{"backgroundColor": "#7193b8"}}>
+        <nav className="navbar navbar-expand-lg navbar-dark" style={{"backgroundColor": "#7193b8"}}>
           <a className="navbar-brand" href="#">Edrak-Course</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            
-              {!auth && (
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <Link className="nav-link" to = {`/user/login`} >
-                      Login
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link className="btn btn-outline-light" to = {`/user/AllCourses`} >
+                  All Courses
+                </Link>
+              </li>
+            </ul>
+            {!auth && (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="btn btn-outline-light" to = {`/user/login`} >
+                    Login
+                  </Link>
+                </li>
+              </ul>
+            )}
+            {auth && (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+                  </a>
+                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <Link className="dropdown-item" to = {`/user/profile`} >
+                      Profile
                     </Link>
-                  </li>
-                </ul>
-              )}
-              {auth && (
-                <ul className="navbar-nav">
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Menu
-                    </a>
-                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <Link className="dropdown-item" to = {`/user/profile`} >
-                        Profile
-                      </Link>
-                      <Link className="dropdown-item" to = {`/user/login`} >
-                        Add course
-                      </Link>
-                      <div className="dropdown-divider"></div>
-                      <a className="dropdown-item" href="/api/user/logout">Logout</a>
-                    </div>
-                  </li>
-                </ul>
-              )}
-            
+                    <Link className="dropdown-item" to = {`/user/login`} >
+                      Add course
+                    </Link>
+                    <div className="dropdown-divider"></div>
+                    <a className="dropdown-item" href="/api/user/logout">Logout</a>
+                  </div>
+                </li>
+              </ul>
+            )}
           </div>
         </nav>
       </div>

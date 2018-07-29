@@ -3,3 +3,7 @@ body {
   width: 100%;
   background-size: cover;
 }
+.ml-auto .dropdown-menu {
+  left: auto !important;
+  right: 0px;
+}
