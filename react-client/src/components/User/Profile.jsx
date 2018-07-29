@@ -38,8 +38,9 @@ class Profile extends React.Component {
       return (<h3> Please Login </h3>)
     }
     let arr = [];
+    console.log(user.Courses)
     {user.Courses.forEach(function(course, i) {
-      arr.push(<DisplayCourseProfile id={course} key={i}/>)
+      arr.push(<DisplayCourseProfile course={course} key={i}/>)
     })}
     return(
       <div className="container-fluid">

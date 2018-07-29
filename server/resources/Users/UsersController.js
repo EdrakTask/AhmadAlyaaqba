@@ -80,7 +80,14 @@ exports.isLogin = function(req, res) {
 }
 //to take the user information once logeddin 
 exports.getLoginData = function(req, res) {
-  Users.findOne({userName: req.session.username}).exec(function(err, user) {
+  Users.findOne({userName: req.session.username}).
+  populate({
+      path:'Courses',
+      populate: {
+        path: "category",
+      }
+    }).
+  exec(function(err, user) {
     if (err) {
       console.error(err);
     }

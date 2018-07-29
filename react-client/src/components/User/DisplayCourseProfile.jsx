@@ -7,44 +7,10 @@ import moment from 'moment';
 class DisplayCourseProfile extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      course : []
-    }
-  }
-
-  componentWillMount() {
-    var that = this;
-    let id = this.props.id;
-    $.ajax({
-      url: `/api/course/${id}`,
-      method: 'GET',
-    })
-    .done (function (data) {
-      that.setState({
-        course:data[0]
-      })
-    })
-    .fail(function( jqXHR, textStatus ) {
-      alert(`Error in retrive, ${textStatus}`);
-    })
   }
 
   render(){
-    const course = this.state.course;
-    let id = this.props.id;
-    if (this.state.course.courseName === undefined) {
-      return (
-        <tr>
-          <th scope="row">loading</th>
-          <th scope="row">loading</th>
-          <th scope="row">loading</th>
-          <th scope="row">loading</th>
-          <th scope="row">loading</th>
-          <th scope="row">loading</th>
-          <th scope="row">loading</th>
-        </tr>
-      )
-    }
+    const course = this.props.course;
     return(
       <tr>
         <th scope="row">{course.courseName}</th>
