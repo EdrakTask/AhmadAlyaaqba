@@ -9,6 +9,7 @@ exports.add = function(req,res){
     if (!user) { // Handle wrong user name
       res.send({success: false, message: 'User Not found'})
     } else {
+      console.log('req.body ',req.body)
       var newCourse = {
         courseName: req.body.courseName,
         dateOfStart: req.body.dateOfStart,
@@ -40,9 +41,9 @@ exports.retriveAll = function(req,res){
 }
 
 exports.delete = function(req,res){
-  course.findOne({_id:req.body.id}).
+  Courses.findOne({_id:req.body.id}).
   populate({ path: 'userId', select: "userName"}).
-  exec(function (erro, course) {
+  exec(function (err, course) {
     if (err) return res.send(err);
     if (course.userId.userName === req.session.username) {
       Courses.deleteOne({_id:req.body.id},function(err){
@@ -53,6 +54,21 @@ exports.delete = function(req,res){
       res.status(401);
       res.send({success: false, message:'You can not delete this course'});
     }
+  })
+}
+
+exports.update = function(req,res){
+  console.log('req.body_______ ',req.body)
+  Courses.findById(req.body.id,function(err,course){
+    if(err) return res.send(err);
+    console.log('req.body', course)
+    course.courseName=req.body.courseName;
+    course.dateOfStart=req.body.dateOfStart;
+    course.description=req.body.description;
+    course.save(function (err, updatedCourse) {
+    if (err) return handleError(err);
+    res.send(updatedCourse);
+  });
   })
 }
 

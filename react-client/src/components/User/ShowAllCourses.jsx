@@ -27,8 +27,7 @@ class ShowAllCourses extends React.Component{
     })
   }
 
-  render(){
-    //define courses variable to be used in map function to show the courses  
+  render(){  
     const courses=this.state.courses;
     let arr = [];
     courses.forEach(function(course,i) {

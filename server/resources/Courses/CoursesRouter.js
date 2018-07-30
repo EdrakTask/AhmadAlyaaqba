@@ -11,10 +11,14 @@ CoursesRouter.route('/')
   .delete(function(req,res){
     CoursesController.delete(req,res);
   })
+  .put(function(req,res){
+    CoursesController.update(req,res);
+  })
 
 CoursesRouter.route('/:id')
   .get(function(req,res){
     CoursesController.retriveOne(req,res);
   })
+
 
 module.exports = CoursesRouter;

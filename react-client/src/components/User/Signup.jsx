@@ -21,7 +21,6 @@ class Signup extends React.Component {
     this.setState({
       [e.target.name]:e.target.value
     });
-    console.log(this.state)
   }
 
   Signup(){
@@ -38,7 +37,7 @@ class Signup extends React.Component {
           message: data.message
         })
       } else {
-        window.location.href = "/user/login";
+        window.location.href = "/";
       }
     })
     .fail(function( jqXHR, textStatus ) {

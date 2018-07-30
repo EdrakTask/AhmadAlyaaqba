@@ -11,7 +11,6 @@ class Navbar extends React.Component {
       user: [],
     }; 
     this.onChange = this.onChange.bind(this);
-    // this.getUserData = this.getUserData.bind(this);
   }
 
   onChange(e){
@@ -35,22 +34,6 @@ class Navbar extends React.Component {
       }
     });
   }
-
-  // getUserData() {
-  //   var that = this
-  //   $.ajax({
-  //     url:'/api/userController/getLogin',
-  //     type:'GET',
-  //     success:function(data){
-  //       that.setState({
-  //         user: data
-  //       })
-  //     },
-  //     error:function(err){
-  //       console.log(err);
-  //     }
-  //   });
-  // }
 
   render() {
     const { auth, anchorEl } = this.state;
@@ -82,14 +65,14 @@ class Navbar extends React.Component {
             {auth && (
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a className="btn btn-outline-light dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Menu
                   </a>
                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link className="dropdown-item" to = {`/user/profile`} >
                       Profile
                     </Link>
-                    <Link className="dropdown-item" to = {`/user/login`} >
+                    <Link className="dropdown-item" to = {`/user/AddNewCourse`} >
                       Add course
                     </Link>
                     <div className="dropdown-divider"></div>
