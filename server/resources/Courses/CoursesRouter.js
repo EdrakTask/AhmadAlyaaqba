@@ -15,10 +15,19 @@ CoursesRouter.route('/')
     CoursesController.update(req,res);
   })
 
+CoursesRouter.route('/newest')
+  .get(function(req, res) {
+    CoursesController.retriveLastFive(req, res);
+  })
+
+CoursesRouter.route('/filterByCategory')
+  .post(function(req, res) {
+    CoursesController.retriveByCategory(req, res);
+  })  
+
 CoursesRouter.route('/:id')
   .get(function(req,res){
     CoursesController.retriveOne(req,res);
   })
-
-
+  
 module.exports = CoursesRouter;

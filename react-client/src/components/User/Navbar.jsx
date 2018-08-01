@@ -7,16 +7,8 @@ class Navbar extends React.Component {
     super(props);
     this.state = {
       auth: false,
-      anchorEl: null,
-      user: [],
+      user: []
     }; 
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(e){
-    this.setState({
-      [e.target.name]:e.target.value
-    });
   }
 
   componentWillMount() {
@@ -36,8 +28,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { auth, anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    const { auth } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-dark" style={{"backgroundColor": "#7193b8"}}>
@@ -47,9 +38,19 @@ class Navbar extends React.Component {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
+              <li className="nav-item" style={{marginRight:'4px'}}>
+                <Link className="btn btn-outline-light" to = {`/`} >
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item" style={{marginRight:'4px'}}>
                 <Link className="btn btn-outline-light" to = {`/user/AllCourses`} >
                   All Courses
+                </Link>
+              </li>
+              <li className="nav-item" style={{marginRight:'4px'}}>
+                <Link className="btn btn-outline-light" to = {`/user/DisplayByCategory`} >
+                  Category
                 </Link>
               </li>
             </ul>

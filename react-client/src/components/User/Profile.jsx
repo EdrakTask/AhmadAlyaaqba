@@ -37,11 +37,10 @@ class Profile extends React.Component {
     if (this.state.user.length === 0) {
       return (<h3> Please Login </h3>)
     }
-    let arr = [];
+    let CoursesArr = [];
     let that = this;
-    console.log(user.Courses)
     {user.Courses.forEach(function(course, i) {
-      arr.push(<DisplayCourseProfile course={course} key={i} refresh={that.getData}/>)
+      CoursesArr.push(<DisplayCourseProfile course={course} key={i} refresh={that.getData}/>)
     })}
     return(
       <div className="container-fluid">
@@ -71,7 +70,7 @@ class Profile extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {arr}
+            {CoursesArr}
           </tbody>
         </table>
       </div>

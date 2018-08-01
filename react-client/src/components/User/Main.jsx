@@ -8,6 +8,7 @@ import ShowAllCourses from './ShowAllCourses.jsx';
 import NewCourse from './AddNewCourse.jsx';
 import EditCourse from './EditCourse.jsx';
 import CourseDetails from './CourseDetails.jsx';
+import DisplayByCategory from './DisplayByCategory.jsx';
 import { browserHistory, Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
 class Main extends React.Component {
@@ -28,6 +29,7 @@ class Main extends React.Component {
         <Route path="/user/AddNewCourse" component={NewCourse} />
         <Route path="/user/EditCourse/:id" component={EditCourse} />
         <Route path="/user/course/:id" component={CourseDetails} />
+        <Route path="/user/DisplayByCategory" component={DisplayByCategory} />
       </div>
     )
   }

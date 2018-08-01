@@ -30,8 +30,10 @@ exports.add = function(req,res){
   })
 }
 
-exports.retriveAll = function(req,res){
+exports.retriveAll = function(req, res){
+  let query = "";
   Courses.find({}).
+  sort('-dateOfCreation').
   populate({ path: 'userId', select: "fullName"}).
   populate('category').
   exec(function(err,course){
@@ -58,17 +60,22 @@ exports.delete = function(req,res){
 }
 
 exports.update = function(req,res){
-  console.log('req.body_______ ',req.body)
-  Courses.findById(req.body.id,function(err,course){
+  Courses.findById({_id:req.body.id}).
+  populate({ path: 'userId', select: "userName"}).
+  exec(function(err, course) {
     if(err) return res.send(err);
-    console.log('req.body', course)
-    course.courseName=req.body.courseName;
-    course.dateOfStart=req.body.dateOfStart;
-    course.description=req.body.description;
-    course.save(function (err, updatedCourse) {
-    if (err) return handleError(err);
-    res.send(updatedCourse);
-  });
+    if (course.userId.userName !== req.session.username) {
+      res.status(401);
+      res.send({success: false, message:'You can not Edit this course'});
+    } else {
+      course.courseName=req.body.courseName;
+      course.dateOfStart=req.body.dateOfStart;
+      course.description=req.body.description;
+      course.save(function (err, updatedCourse) {
+      if (err) return handleError(err);
+        res.send(updatedCourse);
+      });
+    }
   })
 }
 
@@ -79,5 +86,32 @@ exports.retriveOne = function(req, res) {
   exec(function(err,course){
     if (err) return res.send(err);
     res.send(course)
+  })
+}
+
+exports.retriveByCategory = function(req, res) {
+  var query = {};
+  if (req.body.category !== 'All') {
+    query = {category: req.body.category};
+  }
+  Courses.find(query).
+  sort('-dateOfCreation').
+  populate({ path: 'userId', select: "fullName"}).
+  populate('category').
+  exec(function(err, course) {
+    if (err) return res.send(err);
+    res.send(course);
+  })
+}
+
+exports.retriveLastFive = function(req, res) {
+  Courses.find({}).
+  limit(5).
+  sort('-dateOfCreation').
+  populate({ path: 'userId', select: "fullName"}).
+  populate('category').
+  exec(function(err, course) {
+    if (err) return res.send(err);
+    res.send(course);
   })
 }
