@@ -11,10 +11,14 @@ class Signup extends React.Component {
       fullName:'',
       gender:'Male',
       message: '',
-      error: false
+      messageImg: 'Please upload your image',
+      personalImgUrl:'',
+      error: false,
+      uploadSuccess: false
     }
     this.onChange = this.onChange.bind(this);
     this.Signup = this.Signup.bind(this);
+    this.onImageUpload = this.onImageUpload.bind(this);
   }
 
   onChange(e){
@@ -22,6 +26,35 @@ class Signup extends React.Component {
       [e.target.name]:e.target.value
     });
   }
+
+  onImageUpload(e){
+      var imgReader = new FileReader();
+      var img = e.target.files[0];
+      var that = this;
+      var imgCode = ''
+      var target = e.target.name;
+      imgReader.onload = function(upload) {
+        imgCode = upload.target.result
+        imgCode = imgCode.slice(22)
+        $.ajax({
+          url: `https://api.imgur.com/3/image`,
+          method: 'POST',
+          headers: {"Authorization": "Client-ID 307e8453e9ee1b3"},
+          data:imgCode
+        })
+        .done (function (data) {
+          that.setState({
+            [target]: data.data.link,
+            uploadSuccess: true,
+            messageImg: 'Image Uploaded Successfuly'
+          });
+        })
+        .fail(function( jqXHR, textStatus ) {
+          alert("item not found, textStatus");
+        });
+      };
+      imgReader.readAsDataURL(img)
+    }
 
   Signup(){
     var that = this;
@@ -73,6 +106,20 @@ class Signup extends React.Component {
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
+          </div>
+          <div>
+            <label htmlFor="personalImgUrl">Upload yout image</label>
+            <input required accept="image/*"  id="personalImgUrl" type="file" name= "personalImgUrl" onChange={this.onImageUpload.bind(this)} />
+            {!this.state.uploadSuccess && (
+            <div className="alert alert-danger" role="alert">
+              {this.state.messageImg}
+            </div>
+            )}
+            {this.state.uploadSuccess && (
+            <div className="alert alert-success" role="alert">
+              {this.state.messageImg}
+            </div>
+            )}
           </div>
           <button className="btn btn-primary" onClick={this.Signup}>Submit</button>
           <p>Dont have Account ?<Link to = {`/user/create`}> Create new account </Link></p>
