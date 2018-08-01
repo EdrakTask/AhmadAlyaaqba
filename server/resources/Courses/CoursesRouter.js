@@ -2,9 +2,6 @@ var CoursesRouter = require('express').Router();
 var CoursesController = require('./CoursesController');
 
 CoursesRouter.route('/')
-  .get(function(req,res){
-    CoursesController.retriveAll(req,res);
-  })
   .post(function(req,res){
     CoursesController.add(req,res);
   })
@@ -13,6 +10,11 @@ CoursesRouter.route('/')
   })
   .put(function(req,res){
     CoursesController.update(req,res);
+  })
+
+CoursesRouter.route('/retrive')
+  .post(function(req,res){
+    CoursesController.retriveAll(req,res);
   })
 
 CoursesRouter.route('/newest')

@@ -12,7 +12,6 @@ class DisplayCourse extends React.Component{
 
   render(){
     const course = this.props.course;
-    console.log(course)
     let catColor = course.category.color;
     let dateOfStart = moment(course.dateOfStart).calendar();
     return(

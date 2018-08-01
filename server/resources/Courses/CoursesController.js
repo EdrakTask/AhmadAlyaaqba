@@ -9,9 +9,10 @@ exports.add = function(req,res){
     if (!user) { // Handle wrong user name
       res.send({success: false, message: 'User Not found'})
     } else {
-      console.log('req.body ',req.body)
+      let courseNameInput = req.body.courseName
+      courseNameInput = courseNameInput.charAt(0).toUpperCase() + courseNameInput.substr(1);
       var newCourse = {
-        courseName: req.body.courseName,
+        courseName: courseNameInput,
         dateOfStart: req.body.dateOfStart,
         description: req.body.description,
         category: req.body.category,
@@ -31,9 +32,9 @@ exports.add = function(req,res){
 }
 
 exports.retriveAll = function(req, res){
-  let query = "";
+  let query = req.body.sort;
   Courses.find({}).
-  sort('-dateOfCreation').
+  sort(query).
   populate({ path: 'userId', select: "fullName"}).
   populate('category').
   exec(function(err,course){
