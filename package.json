@@ -5,10 +5,10 @@
   "main": "server/index.js",
   "scripts": {
     "start": "nodemon server",
-    "dev-react": "webpack -d --watch"
+    "dev-react": "webpack -d --watch",
+    "postinstall": "webpack",
+    "heroku-postbuild": "webpack -p"
   },
-  "postinstall": "webpack",
-  "heroku-postbuild": "webpack -p",
   "author": "AhmadAlyaaqba",
   "private": false,
   "license": "UNLICENSED",
