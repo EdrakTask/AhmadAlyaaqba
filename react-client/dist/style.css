@@ -7,3 +7,26 @@ body {
   left: auto !important;
   right: 0px;
 }
+
+.jumbotron {
+	background-color: white;
+	border-width: 1px;
+	border-color: #05305d;
+	border-style: solid;
+}
+
+.carousel-inner {
+    position: relative;
+    height: 50vh;
+}
+
+.hr-light {
+  border-top: 3px solid #fff;
+  width: 80px;
+}
+hr {
+  border: 0;
+  height: 1px;
+  width: 50%;
+  background-image: linear-gradient(to right, rgba(170, 38, 232, 0), rgba(170, 38, 232, 0.75), rgba(170, 38, 232, 0));
+}

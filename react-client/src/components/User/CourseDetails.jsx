@@ -2,6 +2,8 @@ import React from 'react';
 import {NavLink, Link, Redirect} from 'react-router-dom';
 import $ from 'jquery';
 import DisplayCourseProfile from './DisplayCourseProfile.jsx';
+import ReactPlayer from 'react-player';
+import moment from 'moment';
 
 class CourseDetails extends React.Component {
   constructor(props) {
@@ -27,7 +29,6 @@ class CourseDetails extends React.Component {
       that.setState({
         course:data[0]
       })
-      console.log(data)
     })
     .fail(function( jqXHR, textStatus ) {
       alert(`Error in retrive, ${textStatus}`);
@@ -39,19 +40,29 @@ class CourseDetails extends React.Component {
     if (this.state.course.courseName === undefined) {
       return (<h3> Course not found </h3>)
     }
+    let dateOfCreation = moment(this.state.course.dateOfCreation).calendar()
     return(
       <div className="container-fluid">
         <div className="card w-100">
           <div className="card-body">
-            <div className="row">
-              <div className="col-3">
-                img here if needed
+              <h3 className="card-titlee text-center">{this.state.course.courseName}</h3>
+              <p className="card-text">Description: {this.state.course.description}</p>
+              <div style={{margin:'auto'}}>
+                <ReactPlayer url={this.state.course.videoURL} playing controls='true' />
               </div>
-              <div className="col-9">
-                <h3 className="card-title">course title</h3>
-                <p className="card-text">bla bla bla bla</p>
-              </div>
+          </div>
+          <div className="card-footer">
+          <div className="row">
+            <div className="col-3">
+              Created at : {dateOfCreation}
             </div>
+            <div className="col-3">
+              Category: {this.state.course.category.categoryName}
+            </div>
+            <div className="col-3">
+              Posted by : {this.state.course.userId.fullName}
+            </div>
+          </div>
           </div>
         </div>
       </div>

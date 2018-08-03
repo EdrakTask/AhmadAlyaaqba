@@ -16,7 +16,9 @@ exports.add = function(req,res){
         dateOfStart: req.body.dateOfStart,
         description: req.body.description,
         category: req.body.category,
-        userId: req.session._id
+        userId: req.session._id,
+        videoURL: req.body.videoURL,
+        videoID: req.body.videoID
       }
       var course = new Courses(newCourse);
       course.save(function(err){
@@ -95,8 +97,9 @@ exports.retriveByCategory = function(req, res) {
   if (req.body.category !== 'All') {
     query = {category: req.body.category};
   }
+  let sortQuery = req.body.sort;
   Courses.find(query).
-  sort('-dateOfCreation').
+  sort(sortQuery).
   populate({ path: 'userId', select: "fullName"}).
   populate('category').
   exec(function(err, course) {

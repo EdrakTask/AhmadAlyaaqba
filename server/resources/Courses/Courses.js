@@ -5,6 +5,7 @@ var CoursesSchema = mongoose.Schema({
   dateOfCreation:{ type:Date, required:true, default: Date.now },
   dateOfStart:{ type:Date, required:true },
   description:{ type:String, required:true },
+  videoURL:{ type:String, required:true },
   category:{ type: mongoose.Schema.Types.ObjectId, ref: 'Categorys' },
   userId:{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }
 })

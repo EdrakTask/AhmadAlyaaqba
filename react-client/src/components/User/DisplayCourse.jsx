@@ -15,7 +15,7 @@ class DisplayCourse extends React.Component{
     let catColor = course.category.color;
     let dateOfStart = moment(course.dateOfStart).calendar();
     return(
-      <div className="card mb-4" style={{borderColor:catColor}} key={this.props.keyC}>
+      <div className="card mb-4" style={{borderColor:catColor}} key={this.props.keyc}>
         <div className="card-header">
           <h5><Link className="card-title" style={{color:catColor}} to = {`/user/course/${course._id}`}> {course.courseName} </Link></h5>
           <small>Posted by: {course.userId.fullName} </small>            

@@ -11,13 +11,13 @@ class DisplayByCategory extends React.Component{
       categorys:[],
       arr: [],
       category: 'All',
+      sort:'courseName',
       courses: []
     }
     this.handleChange=this.handleChange.bind(this);
     this.getCourses = this.getCourses.bind(this);
   }
   
-
   componentDidMount(){
     let that = this;
     $.ajax({
@@ -31,7 +31,6 @@ class DisplayByCategory extends React.Component{
     });
   }
 
-
   handleChange(t){
     this.setState({
       [t.target.name]: t.target.value 
@@ -41,7 +40,8 @@ class DisplayByCategory extends React.Component{
   getCourses() {
     let that = this;
     let obj = {
-      category: this.state.category
+      category: this.state.category,
+      sort: this.state.sort
     }
     console.log(obj)
     $.ajax({
@@ -79,6 +79,7 @@ class DisplayByCategory extends React.Component{
         CoursesArr.push(<DisplayCourse course={course} key= {i} />)
       })
     }
+
     return(
       <div className="container-fluid">
         <div className="jumbotron">
@@ -86,17 +87,28 @@ class DisplayByCategory extends React.Component{
             <h3> Select Category </h3>
           </div>
           <div className="row">
-            <div className="col-10">
-              <div className="form-group">
-                <select className="form-control" id="sel1" name='category' onChange={this.handleChange}>
-                <option value = 'All'>All Category</option>
-                  {cat.map(function(cate,i){
-                    return(
-                      <option value={cate._id} key={i}>{cate.categoryName}</option>
-                    )})
-                  }
-                </select>
-              </div>
+            <div className="col-1">
+              <label>Category: </label>
+            </div>
+            <div className="col-4">
+              <select className="form-control" id="sel1" name='category' onChange={this.handleChange}>
+              <option value = 'All'>All Category</option>
+                {cat.map(function(cate,i){
+                  return(
+                    <option value={cate._id} key={i}>{cate.categoryName}</option>
+                  )})
+                }
+              </select>
+            </div>
+            <div className="col-1">
+              <label>sort by: </label>
+            </div>
+            <div className="col-4">
+              <select className="form-control" name='sort' onChange={this.handleChange}>
+                <option value = 'courseName'>Course Name</option>
+                <option value = 'dateOfCreation'>Date of Create</option>
+                <option value = 'dateOfStart'>Date of Start</option>
+              </select>
             </div>
             <div className="col-2">
               <button className="btn btn-primary" onClick={this.getCourses}>Show</button>
@@ -109,7 +121,6 @@ class DisplayByCategory extends React.Component{
       </div>
     )
   }
-
 }
 
 module.exports = DisplayByCategory;

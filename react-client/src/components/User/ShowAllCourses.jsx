@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Card} from 'react-router-dom';
 import $ from 'jquery';
 import moment from 'moment';
 import DisplayCourse from './DisplayCourse.jsx';
@@ -56,14 +55,16 @@ class ShowAllCourses extends React.Component{
       } else if ( i % 4 === 0 ) {
         arr.push(<div className="w-100 d-none d-lg-block d-xl-none"></div>)
       } else if (i % 5 === 0) {
-        arr.push(<div className="w-100 d-none d-xl-block"></div>)
+        arr.push(<div className="w-100 d-none d-xl-block d-xl-none"></div>)
       }
       arr.push(<DisplayCourse course={course} key= {i} />)
     })
     return(
       <div>
         <div className="row">
-          <div className="col-1"></div>
+          <div className="col-1">
+            <label style={{margin: '7px'}}>{ }Sorted by:</label>
+          </div>
           <div className="col-9">
             <select className="form-control" name='sort' onChange={this.handleChange}>
               <option value = 'courseName'>Course Name</option>

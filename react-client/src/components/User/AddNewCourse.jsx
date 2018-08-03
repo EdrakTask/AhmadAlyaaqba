@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
 
 class NewCourse extends React.Component{
   constructor(){
@@ -11,15 +9,19 @@ class NewCourse extends React.Component{
       dateOfStart:'',
       desc:'',
       cName:'',
+      videoURL:'',
       userId:'',
       category:'',
       alert: false,
-      message: ''
+      message: '',
+      alertYoutube: false,
+      messageUpload:'',
+      location: '',
     }
     this.handleChange=this.handleChange.bind(this);
     this.send=this.send.bind(this);    
+    this.uploadYoutube = this.uploadYoutube.bind(this);
   }
-  
 
   componentDidMount(){
     //get the category names for droplist
@@ -40,7 +42,8 @@ class NewCourse extends React.Component{
       courseName:this.state.cName,
       description:this.state.desc,
       dateOfStart:this.state.dateOfStart,
-      category:this.state.category
+      category:this.state.category,
+      videoURL: this.state.videoURL
     }
     let that = this;
    //send the data
@@ -55,6 +58,41 @@ class NewCourse extends React.Component{
         })
       }
     })
+  }
+
+  uploadYoutube(){
+    if (this.state.location === '') {
+      this.setState({
+        alertYoutube: true,
+        messageUpload:'Please insert video location',
+      })
+    } else {
+      this.setState({
+        alertYoutube: true,
+        messageUpload:'Start Uploading, please wait',
+      })
+      let that = this;
+      let data = {
+        cName: this.state.cName,
+        desc: this.state.desc,
+        location: this.state.location
+      }
+     //send the data
+      $.ajax({
+        url: `/api/youtube`,
+        method: 'POST',
+        data: data
+      })
+      .done (function (data) {
+        that.setState({
+          messageUpload: 'Uploaded successfully',
+          videoURL: "http://youtu.be/"+data.id
+        });
+      })
+      .fail(function( jqXHR, textStatus ) {
+        alert("somthing went wrong");
+      });
+    }
   }
 
   handleChange(t){
@@ -81,10 +119,10 @@ class NewCourse extends React.Component{
           <div className="form-group">
             <label htmlFor="desc">description</label>
             <input type="text" className="form-control" id="desc" placeholder="Enter course discription" 
-            name="desc" value={this.state.desc} onChange={this.handleChange}/>
+            name="desc"  value={this.state.desc} onChange={this.handleChange}/>
           </div>
           <div>
-            <label htmlFor="desc">date of start:</label>
+            <label htmlFor="date">date of start:</label>
             <input name="dateOfStart" type="datetime-local" value={this.state.dateOfStart} onChange={this.handleChange}/>
           </div>
           <div className="form-group">
@@ -98,12 +136,38 @@ class NewCourse extends React.Component{
               }
             </select>
           </div>
+          <div className="alert alert-info" role="alert">
+            if you already have courses uploaded to youtube, please enter its link 
+          </div>
+          <div className="form-group">
+            <label htmlFor="upload">Youtube course Link:</label>
+            <input className="form-control" type='text' accept="video/*" name="videoURL" onChange={this.handleChange} />
+          </div>
+          <div className="alert alert-info" role="alert">
+            If you dont have your course in youtube yet, you can upload it by past the location where its in your computer 
+          </div>
+          <div className="form-group">
+            <label htmlFor="upload">Course file location:</label>
+            <div className="row">
+              <div className="col-10">
+                <input className="form-control" type='text' accept="video/*" name="location" onChange={this.handleChange} />
+              </div>
+              <div className="col-2">
+                <button className="btn btn-info" onClick={this.uploadYoutube}>Upload</button>
+              </div>
+            </div>
+            < br/>
+            {this.state.alertYoutube && (
+              <div className="alert alert-warning" role="alert">
+                {this.state.messageUpload}
+              </div>
+            )}
+          </div>
           <button className="btn btn-primary" onClick={this.send}>Submit</button>
         </div> 
       </div>
     )
   }
-
 }
 
 module.exports = NewCourse;
