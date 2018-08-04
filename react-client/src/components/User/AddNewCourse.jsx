@@ -10,7 +10,6 @@ class NewCourse extends React.Component{
       desc:'',
       cName:'',
       videoURL:'',
-      userId:'',
       category:'',
       alert: false,
       message: '',
@@ -38,26 +37,44 @@ class NewCourse extends React.Component{
   }
   
   send(){
-    var courseData={
-      courseName:this.state.cName,
-      description:this.state.desc,
-      dateOfStart:this.state.dateOfStart,
-      category:this.state.category,
-      videoURL: this.state.videoURL
-    }
-    let that = this;
-   //send the data
-    $.ajax({
-      url:'/api/course',
-      method:'post',
-      data:courseData,
-      success:function(){
-        that.setState({
-          alert:true,
-          message: 'Course created successfully'
-        })
+    if (this.state.cName === '' || this.state.desc === '' || this.state.category === '') {
+      this.setState({
+        alert: true,
+        message: 'Please enter all fileds'
+      })
+    } else if (this.state.videoURL === '') {
+      this.setState({
+        alert: true,
+        message: 'please upload video or insert youtube link'
+      })
+    } else {
+      var courseData={
+        courseName:this.state.cName,
+        description:this.state.desc,
+        dateOfStart:this.state.dateOfStart,
+        category:this.state.category,
+        videoURL: this.state.videoURL
       }
-    })
+      let that = this;
+     //send the data
+      $.ajax({
+        url:'/api/course',
+        method:'post',
+        data:courseData,
+        success:function(){
+          that.setState({
+            alert:true,
+            message: 'Course created successfully',
+            dateOfStart:'',
+            desc:'',
+            cName:'',
+            videoURL:'',
+            category:'',
+            videoURL:''
+          })
+        }
+      })
+    }
   }
 
   uploadYoutube(){
@@ -106,27 +123,23 @@ class NewCourse extends React.Component{
     return(
       <div className="container-fluid">
         <div className="jumbotron">
-          {this.state.alert && (
-            <div className="alert alert-success" role="alert">
-              {this.state.message}
-            </div>
-          )}
+          
           <div className="form-group">
-            <label htmlFor="courseName">course name</label>
+            <label htmlFor="courseName">Course name</label>
             <input type="text" className="form-control" id="cName" placeholder="Enter Course Name" 
-            name="cName" value={this.state.cName} onChange={this.handleChange}/>
+            name="cName" value={this.state.cName} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="desc">description</label>
+            <label htmlFor="desc">Description</label>
             <input type="text" className="form-control" id="desc" placeholder="Enter course discription" 
-            name="desc"  value={this.state.desc} onChange={this.handleChange}/>
+            name="desc"  value={this.state.desc} onChange={this.handleChange} />
           </div>
           <div>
-            <label htmlFor="date">date of start:</label>
-            <input name="dateOfStart" type="datetime-local" value={this.state.dateOfStart} onChange={this.handleChange}/>
+            <label htmlFor="date">Date of start:</label>
+            <input name="dateOfStart" type="datetime-local" value={this.state.dateOfStart} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="sel1">Select list:</label>
+            <label htmlFor="sel1">Select Category:</label>
             <select className="form-control" id="sel1" name='category' onChange={this.handleChange}>
               <option>select category</option>
               {cat.map(function(cate,i){
@@ -164,6 +177,12 @@ class NewCourse extends React.Component{
             )}
           </div>
           <button className="btn btn-primary" onClick={this.send}>Submit</button>
+          <br />
+          {this.state.alert && (
+            <div className="alert alert-success" role="alert">
+              {this.state.message}
+            </div>
+          )}
         </div> 
       </div>
     )

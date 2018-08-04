@@ -17,17 +17,16 @@ exports.add = function(req,res){
         description: req.body.description,
         category: req.body.category,
         userId: req.session._id,
-        videoURL: req.body.videoURL,
-        videoID: req.body.videoID
+        videoURL: req.body.videoURL
       }
       var course = new Courses(newCourse);
       course.save(function(err){
-        if(err) res.send({sucess:false, message:err});
+        if(err) return res.send({sucess:false, message:err});
       })
       user.Courses.push(course._id);
       user.save(function(err,data){
-        if (err) return res.send(err);
-        res.send({sucess:true, message:'Course added successfully'});
+        if (err) {return res.send(err);}
+        else { res.send({sucess:true, message:'Course added successfully'});}
       })
     }
   })
